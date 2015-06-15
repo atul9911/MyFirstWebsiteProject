@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>iisnode logs</title>
+    <style type="text/css">
+        body
+        {
+            font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;
+        }
+        table
+        {
+            border-collapse: collapse;
+        }
+        td, th
+        {
+            border: 1px solid lightgray;
+            padding: 3px 7px 2px 7px;
+        }
+        th
+        {
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 4px;
+            background-color: Gray;
+            color: #ffffff;
+        }
+        td.stderr
+        {
+            color: Red;
+        }
+    </style>
+</head>
+<body>
+    <table id="logFilesTable">
+        <tr>
+            <th>
+                Computer name
+            </th>
+            <th>
+                PID
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Link
+            </th>
+        </tr>
+    </table>
+    <p id="lastUpdated"></p>
+    <script type="text/javascript">
+
+        // this is replaced with actual data at runtime by code in interceptor.js
+        var logFiles = [{"file":"LENOVO-2268-stdout-1433309414753.txt","computername":"LENOVO","pid":2268,"type":"stdout","created":1433309414753},{"file":"LENOVO-2344-stdout-1434195024368.txt","computername":"LENOVO","pid":2344,"type":"stdout","created":1434195024368},{"file":"LENOVO-4220-stdout-1433751891067.txt","computername":"LENOVO","pid":4220,"type":"stdout","created":1433751891067},{"file":"LENOVO-4840-stdout-1434354948806.txt","computername":"LENOVO","pid":4840,"type":"stdout","created":1434354948806},{"file":"LENOVO-488-stdout-1433839696156.txt","computername":"LENOVO","pid":488,"type":"stdout","created":1433839696156},{"file":"LENOVO-5404-stdout-1433400818965.txt","computername":"LENOVO","pid":5404,"type":"stdout","created":1433400818965},{"file":"LENOVO-5460-stdout-1433931588049.txt","computername":"LENOVO","pid":5460,"type":"stdout","created":1433931588049},{"file":"LENOVO-6360-stdout-1432113611607.txt","computername":"LENOVO","pid":6360,"type":"stdout","created":1432113611607},{"file":"LENOVO-6532-stdout-1433939819682.txt","computername":"LENOVO","pid":6532,"type":"stdout","created":1433939819682},{"file":"LENOVO-7256-stdout-1433416843173.txt","computername":"LENOVO","pid":7256,"type":"stdout","created":1433416843173}];
+        var lastUpdated = 1434354950486;
+        var date = new Date();
+
+        date.setTime(lastUpdated);
+        document.getElementById('lastUpdated').innerHTML = 'Index was last updated ' + date;
+
+        logFiles.sort(function (a, b) {
+            return b.created - a.created;
+        });
+
+        var logFilesTable = document.getElementById("logFilesTable");
+        for (var i = 0; i < logFiles.length; i++) {
+            var logFile = logFiles[i];
+            date.setTime(logFile.created);
+            var row = logFilesTable.insertRow(-1);
+            var computerNameCell = row.insertCell(0);
+            var pidCell = row.insertCell(1);
+            var typeCell = row.insertCell(2);
+            var dateCell = row.insertCell(3);
+            var logCell = row.insertCell(4);
+            computerNameCell.innerHTML = logFile.computername;
+            pidCell.innerHTML = logFile.pid.toString();
+            typeCell.innerHTML = logFile.type;
+            typeCell.setAttribute('class', logFile.type);
+            dateCell.innerHTML = date.toString();
+            logCell.innerHTML = '<a href="' + logFile.file + '">log</a>';
+        };
+
+    </script>
+</body>
+</html>
